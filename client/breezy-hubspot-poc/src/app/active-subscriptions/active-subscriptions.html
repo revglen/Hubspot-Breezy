@@ -1,0 +1,163 @@
+<div class="customer-subscriptions-section">
+    <div class="section-header">
+    <h2>💰 Customer Active Subscription Status</h2>
+    <p>Select a customer to view their active subscriptions</p>
+    </div>
+
+    <!-- Customer Selection -->
+    <div class="selection-card">
+    <div class="form-group">
+        <label for="customerSelect">Select Customer:</label>
+        <select 
+        id="customerSelect"
+        [(ngModel)]="selectedCustomerId"
+        (change)="onCustomerSelected()"
+        class="form-control">
+        <option value="">-- Choose a customer --</option>
+        @for (contact of contacts(); track contact.id) {
+            <option [value]="contact.id || ''">
+            {{ contact.properties.firstname || '' }} {{ contact.properties.lastname || '' }} 
+            ({{ contact.properties.email || '' }})
+            </option>
+        }
+        </select>
+    </div>
+    
+    @if (contactsLoading()) {
+        <div class="loading-text">Loading customers...</div>
+    }
+    </div>
+
+    <!-- Loading State -->
+    @if (subscriptionsLoading()) {
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading subscription data...</p>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (error()) {
+    <div class="error-state">
+        <p>❌ Error: {{ error() }}</p>
+        <button (click)="clearError()" class="retry-btn">Dismiss</button>
+    </div>
+    }
+
+    <!-- No Customer Selected -->
+    @if (!selectedCustomerId && !subscriptionsLoading() && !error()) {
+    <div class="empty-state">
+        <div class="empty-icon">👥</div>
+        <h3>Select a Customer</h3>
+        <p>Choose a customer from the dropdown above to view their subscription status.</p>
+    </div>
+    }
+
+    @if (selectedCustomer() && customerSubscription() && customerSubscription()!.activeSubscriptions.length > 0) {
+    <div class="subscriptions-results">
+        <div class="customer-header-card">
+        <div class="customer-avatar">
+            {{ selectedCustomer()?.properties?.firstname?.charAt(0) || 'U' }}{{ selectedCustomer()?.properties?.lastname?.charAt(0) || 'S' }}
+        </div>
+        <div class="customer-details">
+            <h3>{{ selectedCustomer()?.properties?.firstname }} {{ selectedCustomer()?.properties?.lastname }}</h3>
+            <p class="customer-email">{{ selectedCustomer()?.properties?.email }}</p>
+            <p class="customer-meta">
+            {{ selectedCustomer()?.properties?.company || 'No company' }} • 
+            {{ selectedCustomer()?.properties?.jobtitle || 'No job title' }}
+            </p>
+        </div>
+        <div class="customer-summary">
+            <div class="summary-item">
+            <span class="summary-number">{{ customerSubscription()!.activeSubscriptions.length }}</span>
+            <span class="summary-label">Active Subscriptions</span>
+            </div>
+            <div class="summary-item">
+            <span class="summary-number">${{ customerSubscription()!.totalMonthlyRevenue }}</span>
+            <span class="summary-label">Monthly Revenue</span>
+            </div>
+        </div>
+        </div>
+
+        <div class="subscriptions-list">
+        <h4>Active Subscriptions</h4>
+        <div class="subscriptions-grid">
+            @for (subscription of customerSubscription()!.activeSubscriptions; track subscription.id) {
+            <div class="subscription-card">
+                <div class="subscription-header">
+                <h5>{{ subscription.properties.dealname }}</h5>
+                <span class="subscription-amount">${{ subscription.properties.amount }}/month</span>
+                </div>
+                <div class="subscription-details">
+                <div class="detail-item">
+                    <span class="detail-label">Status:</span>
+                    <span class="status-badge active">Active</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Stage:</span>
+                    <span class="stage-value">{{ formatDealStage(subscription.properties.dealstage) }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Deal ID:</span>
+                    <span class="deal-id">{{ subscription.id }}</span>
+                </div>
+                </div>
+                <div class="subscription-actions">
+                <button class="action-btn view-btn" (click)="viewDealDetails(subscription)">
+                    👁️ View Details
+                </button>
+                <button class="action-btn manage-btn" (click)="manageSubscription(subscription)">
+                    ⚙️ Manage
+                </button>
+                </div>
+            </div>
+            }
+        </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+        <h4>Quick Actions</h4>
+        <div class="action-buttons">
+            <button class="action-btn primary" (click)="createNewSubscription()">
+            ➕ Add New Subscription
+            </button>
+            <button class="action-btn secondary" (click)="viewAllDeals()">
+            📊 View All Deals
+            </button>
+            <button class="action-btn secondary" (click)="contactCustomer()">
+            ✉️ Contact Customer
+            </button>
+        </div>
+        </div>
+    </div>
+    }
+
+    <!-- Customer with No Active Subscriptions -->
+    @if (selectedCustomer() && customerSubscription() && customerSubscription()!.activeSubscriptions.length === 0) {
+    <div class="no-subscriptions-state">
+        <div class="empty-icon">💰</div>
+        <h3>No Active Subscriptions</h3>
+        <p><strong>{{ selectedCustomer()?.properties?.firstname }} {{ selectedCustomer()?.properties?.lastname }}</strong> does not have any active subscriptions.</p>
+        <p>All their deals are either in progress, lost, or haven't been created yet.</p>
+        
+        <div class="suggestions">
+        <h4>Suggestions:</h4>
+        <ul>
+            <li>Create a new subscription deal for this customer</li>
+            <li>Check if they have deals in other stages that can be converted</li>
+            <li>Review their purchase history for potential upsell opportunities</li>
+        </ul>
+        </div>
+
+        <div class="action-buttons">
+        <button class="action-btn primary" (click)="createNewSubscription()">
+            ➕ Create First Subscription
+        </button>
+        <button class="action-btn secondary" (click)="viewAllDeals()">
+            📊 View All Customer Deals
+        </button>
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,94 @@
+<div class="deals-list-section">
+    <div class="section-header">
+    <h2>💰 All Subscription Deals</h2>
+    <button 
+        (click)="loadDeals()" 
+        class="refresh-btn" 
+        [disabled]="loading()">
+        {{ loading() ? '🔄 Refreshing...' : '🔄 Refresh' }}
+    </button>
+    </div>
+
+    <!-- Loading State -->
+    @if (loading()) {
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading deals from HubSpot...</p>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (error()) {
+    <div class="error-state">
+        <p>❌ Error: {{ error() }}</p>
+        <button (click)="loadDeals()" class="retry-btn">Retry</button>
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (!loading() && deals().length === 0 && !error()) {
+    <div class="empty-state">
+        <div class="empty-icon">💰</div>
+        <h3>No Deals Found</h3>
+        <p>No subscription deals have been created yet. Create your first deal to get started.</p>
+    </div>
+    }
+
+    <!-- Deals Grid -->
+    @if (!loading() && deals().length > 0) {
+    <div class="deals-grid">
+        @for (deal of deals(); track deal.id) {
+        <div class="deal-card" [class]="getDealStageClass(deal.properties.dealstage)">
+            <div class="deal-header">
+            <h3 class="deal-name">{{ deal.properties.dealname }}</h3>
+            <span class="deal-amount">${{ deal.properties.amount }}</span>
+            </div>
+            
+            <div class="deal-details">
+            <div class="deal-stage">
+                <span class="stage-badge" [class]="getDealStageClass(deal.properties.dealstage)">
+                {{ formatDealStage(deal.properties.dealstage) }}
+                </span>
+            </div>
+            
+            <div class="deal-meta">
+                @if (deal.properties.createdate) {
+                <div class="meta-item">
+                    <span class="meta-label">Created:</span>
+                    <span class="meta-value">{{ formatDate(deal.properties.createdate) }}</span>
+                </div>
+                }
+                
+                @if (deal.properties.closedate) {
+                <div class="meta-item">
+                    <span class="meta-label">Closed:</span>
+                    <span class="meta-value">{{ formatDate(deal.properties.closedate) }}</span>
+                </div>
+                }
+            </div>
+            </div>
+            
+            <div class="deal-actions">
+            <span class="deal-id">ID: {{ deal.id }}</span>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="stats-summary">
+        <div class="stat-item">
+        <span class="stat-number">{{ getTotalDeals() }}</span>
+        <span class="stat-label">Total Deals</span>
+        </div>
+        <div class="stat-item">
+        <span class="stat-number">${{ getTotalRevenue() }}</span>
+        <span class="stat-label">Total Revenue</span>
+        </div>
+        <div class="stat-item">
+        <span class="stat-number">{{ getClosedWonDeals() }}</span>
+        <span class="stat-label">Active Subscriptions</span>
+        </div>
+    </div>
+    }
+</div>

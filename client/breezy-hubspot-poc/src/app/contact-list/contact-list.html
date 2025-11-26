@@ -1,0 +1,98 @@
+<div class="contact-list-section">
+      <div class="section-header">
+        <h2>📋 Synced Contacts from HubSpot</h2>
+        <button 
+          (click)="loadContacts()" 
+          class="refresh-btn" 
+          [disabled]="loading()">
+          {{ loading() ? '🔄 Refreshing...' : '🔄 Refresh' }}
+        </button>
+      </div>
+
+      @if (loading()) {
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading contacts from HubSpot...</p>
+        </div>
+      }
+
+      @if (error()) {
+        <div class="error-state">
+          <p>❌ Error: {{ error() }}</p>
+          <button (click)="loadContacts()" class="retry-btn">Retry</button>
+        </div>
+      }
+
+      @if (!loading() && contacts().length === 0 && !error()) {
+        <div class="empty-state">
+          <p>No contacts found in HubSpot. Create your first contact above!</p>
+        </div>
+      }
+
+      @if (!loading() && contacts().length > 0) {
+        <div class="contacts-table-container">
+          <table class="contacts-table">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (contact of contacts(); track contact.id) {
+                <tr class="contact-row">
+                  <td>{{ contact.properties.firstname || '-' }}</td>
+                  <td>{{ contact.properties.lastname || '-' }}</td>
+                  <td>{{ contact.properties.email || '-' }}</td>
+                  <td>{{ contact.properties.jobtitle || '-' }}</td>
+                  <td>{{ contact.properties.company || '-' }}</td>
+                  <td>
+                    <button 
+                      (click)="toggleDeals(contact)"
+                      class="deals-btn"
+                      [disabled]="loadingDeals()[contact.id!]">
+                      {{ loadingDeals()[contact.id!] ? '...' : '💰 Deals' }}
+                    </button>
+                  </td>
+                </tr>
+                
+                @if (selectedContactDeals()[contact.id!]) {
+                  <tr class="deals-expansion-row">
+                    <td colspan="6">
+                      <div class="deals-section">
+                        <h4>Subscription Deals for {{ contact.properties.firstname }} {{ contact.properties.lastname }}</h4>
+                        
+                        @if (selectedContactDeals()[contact.id!].length > 0) {
+                          <div class="deals-list">
+                            @for (deal of selectedContactDeals()[contact.id!]; track deal.id) {
+                              <div class="deal-card">
+                                <div class="deal-info">
+                                  <strong>{{ deal.properties.dealname }}</strong>
+                                  <span class="amount">${{ deal.properties.amount }}</span>
+                                  <span class="stage" 
+                                        [class.closed-won]="deal.properties.dealstage === 'closedwon'">
+                                    {{ deal.properties.dealstage }}
+                                  </span>
+                                </div>
+                              </div>
+                            }
+                          </div>
+                        } @else {
+                          <div class="no-deals">
+                            <p>No subscription deals found for this contact.</p>
+                          </div>
+                        }
+                      </div>
+                    </td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>

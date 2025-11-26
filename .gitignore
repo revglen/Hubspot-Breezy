@@ -1,0 +1,22 @@
+# Ignore ALL files ANYWHERE
+**/node_modules/
+**/.angular/
+**/.vscode/
+**.env
+
+# Node.js dependencies
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production build
+/dist/
+/browser/
+
+# Documentation
+/docs/generated/
+
+# Misc
+/.sass-cache
+/connect.lock
+/libpeerconnection.log

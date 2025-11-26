@@ -1,0 +1,130 @@
+<div class="create-deal-section">
+     <p class="form-description">
+        Create a new deal in HubSpot when a customer converts from free trial to paid subscription.
+      </p>
+
+      <form [formGroup]="dealForm" (ngSubmit)="onSubmit()" class="deal-form">
+        
+        <div class="form-group">
+          <label for="contactId">Select Customer *</label>
+          <select
+            id="contactId"
+            formControlName="contactId"
+            class="form-control"
+            [class.error]="dealForm.get('contactId')?.invalid && dealForm.get('contactId')?.touched">
+            <option value="">Select a customer</option>
+            @for (contact of contacts(); track contact.id) {
+              <option [value]="contact.id">
+                {{ contact.properties.firstname }} {{ contact.properties.lastname }} 
+                ({{ contact.properties.email }})
+              </option>
+            }
+          </select>
+          @if (dealForm.get('contactId')?.invalid && dealForm.get('contactId')?.touched) {
+            <div class="error-message">
+              Please select a customer
+            </div>
+          }
+          @if (loadingContacts()) {
+            <div class="loading-text">
+              Loading contacts...
+            </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="subscriptionTemplate">Quick Select Subscription Type</label>
+          <select
+            id="subscriptionTemplate"
+            (change)="onSubscriptionTemplateChange($event)"
+            class="form-control">
+            <option value="">Select a subscription template</option>
+            @for (template of getSubscriptionTemplates(); track template.name) {
+              <option [value]="template.name">
+                {{ template.name }} - ${{ template.amount }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dealname">Deal Name *</label>
+            <input
+              type="text"
+              id="dealname"
+              formControlName="dealname"
+              placeholder="e.g., Breezy Premium - Annual Subscription"
+              class="form-control"
+              [class.error]="dealForm.get('dealname')?.invalid && dealForm.get('dealname')?.touched">
+            @if (dealForm.get('dealname')?.invalid && dealForm.get('dealname')?.touched) {
+              <div class="error-message">
+                Deal name is required
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Amount ($) *</label>
+            <input
+              type="number"
+              id="amount"
+              formControlName="amount"
+              placeholder="e.g., 99"
+              class="form-control"
+              [class.error]="dealForm.get('amount')?.invalid && dealForm.get('amount')?.touched">
+            @if (dealForm.get('amount')?.invalid && dealForm.get('amount')?.touched) {
+              <div class="error-message">
+                Valid amount is required
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dealstage">Deal Stage *</label>
+            <select
+              id="dealstage"
+              formControlName="dealstage"
+              class="form-control">
+              @for (stage of dealStages(); track stage) {
+                <option [value]="stage">{{ formatDealStage(stage) }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pipeline">Pipeline</label>
+            <select
+              id="pipeline"
+              formControlName="pipeline"
+              class="form-control">
+              <option value="default">Default Pipeline</option>
+              <option value="subscriptions">Subscriptions Pipeline</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="dealForm.invalid || submitting()">
+            {{ submitting() ? 'Creating Deal...' : '💸 Create Subscription Deal' }}
+          </button>
+        </div>
+
+        @if (successMessage()) {
+          <div class="success-message">
+            {{ successMessage() }}
+          </div>
+        }
+
+        @if (errorMessage()) {
+          <div class="error-message">
+            {{ errorMessage() }}
+          </div>
+        }
+      </form>
+    </div>

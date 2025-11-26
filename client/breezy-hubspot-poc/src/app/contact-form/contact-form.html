@@ -1,0 +1,176 @@
+
+    <div class="contact-form-section">
+      <div class="form-header">
+        <h2>🛒 New Customer Registration</h2>
+        <p class="form-description">
+          Register a new Breezy thermostat customer.
+        </p>
+      </div>
+
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        
+        <!-- Personal Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">Customer Information</h3>
+          
+          <div class="form-group">
+            <label for="firstname" class="form-label">
+              First Name *
+              @if (contactForm.get('firstname')?.hasError('required') && contactForm.get('firstname')?.touched) {
+                <span class="required-indicator">(required)</span>
+              }
+            </label>
+            <input
+              type="text"
+              id="firstname"
+              formControlName="firstname"
+              placeholder="Enter customer's first name"
+              class="form-control"
+              [class.error]="contactForm.get('firstname')?.invalid && contactForm.get('firstname')?.touched"
+              [class.success]="contactForm.get('firstname')?.valid && contactForm.get('firstname')?.touched">
+            @if (contactForm.get('firstname')?.hasError('required') && contactForm.get('firstname')?.touched) {
+              <div class="error-message">
+                ⚠️ First name is required
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="lastname" class="form-label">
+              Last Name *
+              @if (contactForm.get('lastname')?.hasError('required') && contactForm.get('lastname')?.touched) {
+                <span class="required-indicator">(required)</span>
+              }
+            </label>
+            <input
+              type="text"
+              id="lastname"
+              formControlName="lastname"
+              placeholder="Enter customer's last name"
+              class="form-control"
+              [class.error]="contactForm.get('lastname')?.invalid && contactForm.get('lastname')?.touched"
+              [class.success]="contactForm.get('lastname')?.valid && contactForm.get('lastname')?.touched">
+            @if (contactForm.get('lastname')?.hasError('required') && contactForm.get('lastname')?.touched) {
+              <div class="error-message">
+                ⚠️ Last name is required
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">
+              Email Address *
+              @if (contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched) {
+                <span class="required-indicator">(required)</span>
+              }
+            </label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Enter customer's email address"
+              class="form-control"
+              [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+              [class.success]="contactForm.get('email')?.valid && contactForm.get('email')?.touched">
+            @if (contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched) {
+              <div class="error-message">
+                ⚠️ Email address is required
+              </div>
+            }
+            @if (contactForm.get('email')?.hasError('email') && contactForm.get('email')?.touched) {
+              <div class="error-message">
+                ⚠️ Please enter a valid email address
+              </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="phone" class="form-label">
+              Phone Number
+              <span class="optional-indicator">(optional)</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              formControlName="phone"
+              placeholder="e.g., +353 85 123 4567 or 085 123 4567"
+              class="form-control"
+              [class.error]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched"
+              [class.success]="contactForm.get('phone')?.valid && contactForm.get('phone')?.touched">
+            @if (contactForm.get('phone')?.hasError('irelandPhone') && contactForm.get('phone')?.touched) {
+              <div class="error-message">
+                ⚠️ Please enter a valid Irish phone number
+              </div>
+            }
+            <div class="hint">
+              📞 Irish format: +353 XX XXX XXXX or 0XX XXX XXXX
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address" class="form-label">
+              Delivery Address
+              <span class="optional-indicator">(optional)</span>
+            </label>
+            <textarea
+              id="address"
+              formControlName="address"
+              placeholder="Enter full delivery address for thermostat installation"
+              class="form-control address-field"
+              rows="4"
+              [class.error]="contactForm.get('address')?.invalid && contactForm.get('address')?.touched"
+              [class.success]="contactForm.get('address')?.valid && contactForm.get('address')?.touched">
+            </textarea>
+            <div class="hint">
+              🏠 Full address including street, city, and Eircode for installation scheduling
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="onReset()"
+            [disabled]="submitting()">
+            Clear Form
+          </button>
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="contactForm.invalid || submitting()">
+            @if (submitting()) {
+              <span class="button-loading">
+                <span class="spinner"></span>
+                Syncing to HubSpot...
+              </span>
+            } @else {
+              <span class="button-content">
+                <span class="icon">🚀</span>
+                Register Customer
+              </span>
+            }
+          </button>
+        </div>
+
+        @if (successMessage()) {
+          <div class="success-message">
+            <div class="success-header">
+              <span class="success-icon">✅</span>
+              <strong>Success!</strong>
+            </div>
+            <p>{{ successMessage() }}</p>
+          </div>
+        }
+
+        @if (errorMessage()) {
+          <div class="error-message">
+            <div class="error-header">
+              <span class="error-icon">❌</span>
+              <strong>Error</strong>
+            </div>
+            <p>{{ errorMessage() }}</p>
+          </div>
+        }
+      </form>
+    </div>

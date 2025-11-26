@@ -1,0 +1,120 @@
+<div class="contact-deals-section">
+      <div class="section-header">
+        <h2>💰 Deals for {{ contact().properties.firstname }} {{ contact().properties.lastname }}</h2>
+        <button 
+          (click)="loadDeals()" 
+          class="refresh-btn" 
+          [disabled]="loading()">
+          {{ loading() ? '🔄 Refreshing...' : '🔄 Refresh' }}
+        </button>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="contact-info-card">
+        <div class="contact-avatar">
+          {{ contact().properties.firstname?.charAt(0) }}{{ contact().properties.lastname?.charAt(0) }}
+        </div>
+        <div class="contact-details">
+          <h3>{{ contact().properties.firstname }} {{ contact().properties.lastname }}</h3>
+          <p>{{ contact().properties.email }}</p>
+          <p>{{ contact().properties.company || 'No company' }}</p>
+        </div>
+        <div class="contact-stats">
+          <div class="stat">
+            <span class="stat-number">{{ deals().length }}</span>
+            <span class="stat-label">Total Deals</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">${{ getTotalRevenue() }}</span>
+            <span class="stat-label">Total Value</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      @if (loading()) {
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading deals for contact...</p>
+        </div>
+      }
+
+      <!-- Error State -->
+      @if (error()) {
+        <div class="error-state">
+          <p>❌ Error: {{ error() }}</p>
+          <button (click)="loadDeals()" class="retry-btn">Retry</button>
+        </div>
+      }
+
+      <!-- Empty State -->
+      @if (!loading() && deals().length === 0 && !error()) {
+        <div class="empty-state">
+          <div class="empty-icon">💰</div>
+          <h3>No Deals Found</h3>
+          <p>This contact doesn't have any subscription deals yet.</p>
+          <button class="create-deal-btn" (click)="navigateToCreateDeal()">
+            ➕ Create First Deal
+          </button>
+        </div>
+      }
+
+      <!-- Deals List -->
+      @if (!loading() && deals().length > 0) {
+        <div class="deals-table-container">
+          <table class="deals-table">
+            <thead>
+              <tr>
+                <th>Deal Name</th>
+                <th>Amount</th>
+                <th>Stage</th>
+                <th>Created Date</th>
+                <th>Close Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (deal of deals(); track deal.id) {
+                <tr class="deal-row" [class]="getDealStageClass(deal.properties.dealstage)">
+                  <td>
+                    <strong>{{ deal.properties.dealname }}</strong>
+                  </td>
+                  <td class="deal-amount">${{ deal.properties.amount }}</td>
+                  <td>
+                    <span class="stage-badge" [class]="getDealStageClass(deal.properties.dealstage)">
+                      {{ formatDealStage(deal.properties.dealstage) }}
+                    </span>
+                  </td>
+                  <td>{{ formatDate(deal.properties.createdate) }}</td>
+                  <td>{{ formatDate(deal.properties.closedate) || '-' }}</td>
+                  <td>
+                    <button class="view-deal-btn" (click)="viewDealDetails(deal)">
+                      👁️ View
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Deal Summary -->
+        <div class="deal-summary">
+          <h4>Deal Summary</h4>
+          <div class="summary-stats">
+            <div class="summary-item">
+              <span class="summary-label">Active Subscriptions:</span>
+              <span class="summary-value">{{ getActiveSubscriptions() }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Total Monthly Revenue:</span>
+              <span class="summary-value">${{ getMonthlyRevenue() }}/month</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Conversion Rate:</span>
+              <span class="summary-value">{{ getConversionRate() }}%</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>

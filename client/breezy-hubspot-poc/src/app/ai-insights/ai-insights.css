@@ -1,0 +1,505 @@
+.ai-insights-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e1e5e9;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+}
+
+.ai-status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ai-status.connected {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.ai-status.disconnected, .ai-status.checking {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.config-alert {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.config-alert h4 {
+  margin: 0 0 1rem 0;
+  color: #856404;
+}
+
+.config-alert ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.config-alert li {
+  margin-bottom: 0.5rem;
+  color: #856404;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+.analysis-controls {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.control-group label {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  padding: 0.75rem;
+  border: 2px solid #bdc3c7;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.generate-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: fit-content;
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loading-state, .error-state, .empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 2px dashed #dee2e6;
+  margin: 2rem 0;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-subtext {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.error-state {
+  background: #ffeaea;
+  border-color: #ff4444;
+  color: #d63031;
+}
+
+.retry-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.ai-capabilities {
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.ai-capabilities h4 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.ai-capabilities ul {
+  color: #7f8c8d;
+  line-height: 1.6;
+}
+
+.analysis-results {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.customer-header, .business-header {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e1e5e9;
+}
+
+.customer-header h3, .business-header h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.summary, .overview {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.insight-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  border-left: 4px solid #bdc3c7;
+}
+
+.insight-card.high {
+  border-left-color: #e74c3c;
+}
+
+.insight-card.medium {
+  border-left-color: #f39c12;
+}
+
+.insight-card.low {
+  border-left-color: #27ae60;
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.insight-icon {
+  font-size: 1.5rem;
+}
+
+.insight-type {
+  font-weight: 600;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.confidence-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.confidence-badge.high {
+  background: #d4edda;
+  color: #155724;
+}
+
+.confidence-badge.medium {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.confidence-badge.low {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.insight-message {
+  color: #2c3e50;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.insight-suggestion {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  border-left: 3px solid #3498db;
+  margin-bottom: 1rem;
+}
+
+.insight-priority {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.priority-badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.priority-badge.high {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.priority-badge.medium {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.priority-badge.low {
+  background: #d4edda;
+  color: #155724;
+}
+
+.deals-summary {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+}
+
+.deals-summary h4 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.deals-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.stat-label {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.metric-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  text-align: center;
+}
+
+.metric-value {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.strategic-insights {
+  margin: 2rem 0;
+}
+
+.strategic-insights h4 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.strategic-insight {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  margin-bottom: 1rem;
+  border-left: 4px solid #bdc3c7;
+}
+
+.strategic-insight.high {
+  border-left-color: #e74c3c;
+}
+
+.strategic-insight.medium {
+  border-left-color: #f39c12;
+}
+
+.strategic-insight.low {
+  border-left-color: #27ae60;
+}
+
+.strategic-insight h5 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.strategic-insight p {
+  color: #7f8c8d;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.recommendation {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  border-left: 3px solid #3498db;
+}
+
+.opportunities-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+}
+
+.opportunities-section h4 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.opportunities-list {
+  color: #7f8c8d;
+  line-height: 1.8;
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .analysis-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .control-group {
+    min-width: auto;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

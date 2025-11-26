@@ -1,0 +1,179 @@
+.contact-list-section {
+  margin-top: 2rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.refresh-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.loading-state, .error-state, .empty-state {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-state {
+  background: #ffeaea;
+  border-color: #ff4444;
+  color: #d63031;
+}
+
+.retry-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.contacts-table-container {
+  overflow-x: auto;
+}
+
+.contacts-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.contacts-table th {
+  background: #34495e;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.contacts-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.contact-row:hover {
+  background: #f8f9fa;
+}
+
+.deals-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.deals-btn:hover {
+  background: #219a52;
+}
+
+.deals-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.deals-expansion-row {
+  background: #f8f9fa;
+}
+
+.deals-section {
+  padding: 1.5rem;
+  border-left: 4px solid #27ae60;
+}
+
+.deals-section h4 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.deals-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.deal-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #bdc3c7;
+}
+
+.deal-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.amount {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.stage {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  background: #bdc3c7;
+  color: #2c3e50;
+}
+
+.stage.closed-won {
+  background: #27ae60;
+  color: white;
+}
+
+.no-deals {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}

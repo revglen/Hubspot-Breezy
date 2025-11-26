@@ -1,0 +1,40 @@
+{
+  "name": "hubspot-sa-assessment-backend",
+  "version": "1.0.0",
+  "description": "Backend server for HubSpot Solutions Architect Technical Assessment - Breezy Integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "hubspot",
+    "integration",
+    "assessment"
+  ],
+  "author": "HubSpot",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/vertexai": "^1.10.0",
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertainslie/hs-solution-architect-tech-assignment.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/robertainslie/hs-solution-architect-tech-assignment/issues"
+  },
+  "homepage": "https://github.com/robertainslie/hs-solution-architect-tech-assignment#readme"
+}

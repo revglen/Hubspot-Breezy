@@ -1,0 +1,203 @@
+<div class="ai-insights-section">
+      <div class="section-header">
+        <h2>🤖 AI-Powered Customer Intelligence</h2>
+        <div class="ai-status" [class]="aiStatus()">
+          {{ aiStatus() === 'connected' ? '✅ AI Connected' : '⚠️ AI Disconnected' }}
+        </div>
+      </div>
+
+      <!-- AI Connection Alert -->
+      @if (aiStatus() === 'disconnected' && !loading()) {
+        <div class="config-alert">
+          <h4>🔧 AI Service Unavailable</h4>
+          <p>The AI analysis service is currently unavailable. Please check:</p>
+          <ul>
+            <li>Backend server is running on port 3001</li>
+            <li>Google AI API key is configured in server environment variables</li>
+            <li>Network connection is stable</li>
+          </ul>
+          <button (click)="checkAIConnection()" class="btn-primary">
+            🔄 Check Connection
+          </button>
+        </div>
+      }
+
+      <!-- Analysis Controls -->
+      @if (aiStatus() === 'connected') {
+        <div class="analysis-controls">
+          <div class="control-group">
+            <label>Analyse:</label>
+            <select [(ngModel)]="selectedAnalysisType" class="form-control">
+              <option value="customer">Single Customer Insights</option>
+              <option value="business">Business Intelligence</option>
+            </select>
+          </div>
+
+          @if (selectedAnalysisType === 'customer') {
+            <div class="control-group">
+              <label>Select Customer:</label>
+              <select [(ngModel)]="selectedContactId" class="form-control">
+                <option value="">Select a customer</option>
+                @for (contact of contacts(); track contact.id) {
+                  <option [value]="contact.id || ''">
+                    {{ contact.properties.firstname || '' }} {{ contact.properties.lastname || '' }}
+                  </option>
+                }
+              </select>
+            </div>
+          }
+
+          <button 
+            (click)="generateInsights()" 
+            class="generate-btn"
+            [disabled]="!canGenerateInsights() || loading()">
+            {{ loading() ? '🔄 Analyzing...' : '🔍 Generate AI Insights' }}
+          </button>
+        </div>
+      }
+
+      <!-- Loading State -->
+      @if (loading()) {
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>AI is analysing data and generating insights...</p>
+          <p class="loading-subtext">This may take a few seconds</p>
+        </div>
+      }
+
+      <!-- Error State -->
+      @if (error()) {
+        <div class="error-state">
+          <p>❌ {{ error() }}</p>
+          <button (click)="clearError()" class="retry-btn">Dismiss</button>
+        </div>
+      }
+
+      <!-- Customer Insights -->
+      @if (customerAnalysis() && selectedAnalysisType === 'customer') {
+        <div class="analysis-results">
+          <div class="customer-header">
+            <h3>Insights for {{ customerAnalysis()?.contact?.properties?.firstname || 'Unknown' }} {{ customerAnalysis()?.contact?.properties?.lastname || 'Customer' }}</h3>
+            <p class="summary">{{ customerAnalysis()?.summary || 'No summary available' }}</p>
+          </div>
+
+          <div class="insights-grid">
+            @for (insight of customerAnalysis()?.insights || []; track insight.message) {
+              <div class="insight-card" [class]="insight.priority">
+                <div class="insight-header">
+                  <span class="insight-icon">{{ getInsightIcon(insight.type) }}</span>
+                  <span class="insight-type">{{ formatInsightType(insight.type) }}</span>
+                  <span class="confidence-badge" [class]="getConfidenceLevel(insight.confidence)">
+                    {{ (insight.confidence * 100).toFixed(0) }}% confidence
+                  </span>
+                </div>
+                
+                <div class="insight-message">
+                  {{ insight.message }}
+                </div>
+                
+                <div class="insight-suggestion">
+                  <strong>💡 Recommendation:</strong> {{ insight.suggestion }}
+                </div>
+
+                <div class="insight-priority">
+                  Priority: <span class="priority-badge" [class]="insight.priority">{{ insight.priority }}</span>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Deal Summary -->
+          <div class="deals-summary">
+            <h4>Customer's Subscription History</h4>
+            <div class="deals-stats">
+              <div class="stat">
+                <span class="stat-number">{{ customerAnalysis()?.deals?.length || 0 }}</span>
+                <span class="stat-label">Total Deals</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">{{ getActiveSubscriptions(customerAnalysis()?.deals || []) }}</span>
+                <span class="stat-label">Active Subscriptions</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">${{ getTotalRevenue(customerAnalysis()?.deals || []) }}</span>
+                <span class="stat-label">Total Revenue</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Business Insights -->
+      @if (businessInsights() && selectedAnalysisType === 'business') {
+        <div class="analysis-results">
+          <div class="business-header">
+            <h3>📈 Business Intelligence Report</h3>
+            <p class="overview">{{ businessInsights()?.overview || 'No overview available' }}</p>
+          </div>
+
+          <!-- Key Metrics -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-value">{{ businessInsights()?.key_metrics?.total_customers || 0 }}</span>
+              <span class="metric-label">Total Customers</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">{{ businessInsights()?.key_metrics?.active_subscriptions || 0 }}</span>
+              <span class="metric-label">Active Subscriptions</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">${{ businessInsights()?.key_metrics?.monthly_recurring_revenue || 0 }}</span>
+              <span class="metric-label">Monthly Revenue</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">{{ businessInsights()?.key_metrics?.conversion_rate || 0 }}%</span>
+              <span class="metric-label">Conversion Rate</span>
+            </div>
+          </div>
+
+          <!-- Strategic Insights -->
+          <div class="strategic-insights">
+            <h4>Strategic Insights</h4>
+            @for (insight of businessInsights()?.insights || []; track insight.title) {
+              <div class="strategic-insight" [class]="insight.impact">
+                <h5>{{ insight.title }}</h5>
+                <p>{{ insight.description }}</p>
+                <div class="recommendation">
+                  <strong>Recommendation:</strong> {{ insight.recommendation }}
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Top Opportunities -->
+          <div class="opportunities-section">
+            <h4>🎯 Top Opportunities</h4>
+            <ul class="opportunities-list">
+              @for (opportunity of businessInsights()?.top_opportunities || []; track opportunity) {
+                <li>{{ opportunity }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <!-- Empty State -->
+      @if (aiStatus() === 'connected' && !loading() && !customerAnalysis() && !businessInsights()) {
+        <div class="empty-state">
+          <div class="empty-icon">🤖</div>
+          <h3>No AI Insights Generated Yet</h3>
+          <p>Select an analysis type and generate insights to see AI-powered recommendations.</p>
+          <div class="ai-capabilities">
+            <h4>AI Can Help With:</h4>
+            <ul>
+              <li>Identifying upsell and cross-sell opportunities</li>
+              <li>Predicting subscription cancellation risks</li>
+              <li>Recommending personalised offers</li>
+              <li>Analysing customer usage patterns</li>
+              <li>Providing business intelligence insights</li>
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
