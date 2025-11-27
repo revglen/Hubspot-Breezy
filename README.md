@@ -32,7 +32,7 @@ GOOGLE_AI_API_KEY=your_google_gemini_api_key
 
 Navigate to the GitHub repo listed below and then open the folder - breezy-hubspot-poc
 ```
-git clone <https://github.com/revglen/Hubspot-Breezy.git>
+git clone https://github.com/revglen/Hubspot-Breezy.git
 
 cd breezy-hubspot-poc
 ```
@@ -158,6 +158,8 @@ The POC represents a simplified version of what Breezy's engineering team would 
 # D. HubSpot Data Architecture
 
 ## Entity Relationship Diagram (ERD)
+
+![ERD Diagram](hubspot.png)
 
 - Contact (1) ←→ (M) Deal
 - Contact (M) ←→ (1) Company
