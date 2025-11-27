@@ -18,7 +18,7 @@ export class ContactDeals {
   @Output() dealCreated = new EventEmitter<any>();
 
   contact = input.required<HubSpotContact>();
-  refreshTrigger = input(0); // This will trigger refresh when changed
+  refreshTrigger = input(0); 
   loadingStateChange = output<boolean>();
 
   deals = signal<HubSpotDeal[]>([]);
@@ -108,15 +108,12 @@ export class ContactDeals {
   }
 
   viewDealDetails(deal: HubSpotDeal): void {
-    // In a real app, this would navigate to deal details
     console.log('View deal details:', deal);
     alert(`Deal Details:\nName: ${deal.properties.dealname}\nAmount: $${deal.properties.amount}\nStage: ${deal.properties.dealstage}`);
   }
 
   navigateToCreateDeal(): void {
-    // This would navigate to create deal page with contact pre-selected
     this.contactService.setSelectedContact(this.contact());
-    // In a real app, you would use router navigation here
     console.log('Navigate to create deal for contact:', this.contact());
   }
 }

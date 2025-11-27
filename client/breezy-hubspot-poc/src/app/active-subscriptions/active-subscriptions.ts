@@ -104,14 +104,12 @@ export class ActiveSubscriptions {
     this.error.set('');
   }
 
-  viewDealDetails(deal: HubSpotDeal): void {
-    // In a real app, this would navigate to deal details
+  viewDealDetails(deal: HubSpotDeal): void {    
     console.log('View deal details:', deal);
     alert(`Deal Details:\nName: ${deal.properties?.dealname}\nAmount: $${deal.properties?.amount}\nStage: ${deal.properties?.dealstage}`);
   }
 
   manageSubscription(deal: HubSpotDeal): void {
-    // In a real app, this would open a management modal
     console.log('Manage subscription:', deal);
     alert(`Managing subscription: ${deal.properties?.dealname}`);
   }
@@ -120,7 +118,6 @@ export class ActiveSubscriptions {
     const customer = this.selectedCustomer();
     if (!customer) return;
 
-    // In a real app, this would navigate to create deal page with customer pre-selected
     console.log('Create new subscription for:', customer);
     alert(`Create new subscription for: ${customer.properties?.firstname} ${customer.properties?.lastname}`);
   }
@@ -129,7 +126,6 @@ export class ActiveSubscriptions {
     const customer = this.selectedCustomer();
     if (!customer) return;
 
-    // In a real app, this would navigate to all deals for this customer
     console.log('View all deals for:', customer);
     alert(`View all deals for: ${customer.properties?.firstname} ${customer.properties?.lastname}`);
   }
@@ -138,7 +134,6 @@ export class ActiveSubscriptions {
     const customer = this.selectedCustomer();
     if (!customer) return;
 
-    // In a real app, this would open email or contact modal
     console.log('Contact customer:', customer);
     alert(`Contact: ${customer.properties?.firstname} ${customer.properties?.lastname} at ${customer.properties?.email}`);
   }

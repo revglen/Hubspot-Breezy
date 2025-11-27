@@ -1,246 +1,215 @@
 <div class="dashboard-container">
-      <!-- Sidebar Menu -->
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <h2>Breezy</h2>
-          <p>Admin Dashboard</p>
-        </div>
-        
-        <nav class="sidebar-nav">
-          <!-- Contacts Menu -->
-          <div class="menu-section">
-            <div 
-              class="menu-header" 
-              (click)="toggleMenu('contacts')"
-              [class.active]="activeMenu() === 'contacts'">
-              <span class="menu-icon">👥</span>
-              <span class="menu-title">Contacts</span>
-              <span class="menu-arrow">
-                {{ isMenuOpen('contacts') ? '▼' : '►' }}
-              </span>
-            </div>
-            
-            @if (isMenuOpen('contacts')) {
-              <div class="submenu">
-                <button 
-                  class="submenu-item"
-                  [class.active]="activeSubMenu() === 'show-contacts'"
-                  (click)="setActiveSubMenu('show-contacts')">
-                  <span class="submenu-icon">📋</span>
-                  Show Contacts
-                </button>
-                <button 
-                  class="submenu-item"
-                  [class.active]="activeSubMenu() === 'add-contact'"
-                  (click)="setActiveSubMenu('add-contact')">
-                  <span class="submenu-icon">➕</span>
-                  Add Contact
-                </button>
-                <!-- <button 
-                  class="submenu-item"
-                  [class.active]="activeSubMenu() === 'contact-deals'"
-                  (click)="setActiveSubMenu('contact-deals')">
-                  <span class="submenu-icon">💰</span>
-                  Contact Deals
-                </button> -->
-              </div>
-            }
+    <!-- Sidebar Menu -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Breezy</h2>
+        <p>Admin Dashboard</p>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <!-- Contacts Menu -->
+        <div class="menu-section">
+          <div 
+            class="menu-header" 
+            (click)="toggleMenu('contacts')"
+            [class.active]="activeMenu() === 'contacts'">
+            <span class="menu-icon">👥</span>
+            <span class="menu-title">Contacts</span>
+            <span class="menu-arrow">
+              {{ isMenuOpen('contacts') ? '▼' : '►' }}
+            </span>
           </div>
-
-          <!-- Deals Menu -->
-          <div class="menu-section">
-            <div 
-              class="menu-header" 
-              (click)="toggleMenu('deals')"
-              [class.active]="activeMenu() === 'deals'">
-              <span class="menu-icon">💰</span>
-              <span class="menu-title">Deals</span>
-              <span class="menu-arrow">
-                {{ isMenuOpen('deals') ? '▼' : '►' }}
-              </span>
-            </div>
-            
-            @if (isMenuOpen('deals')) {
-              <div class="submenu">
-                <button 
-                  class="submenu-item"
-                  [class.active]="activeSubMenu() === 'all-deals'"
-                  (click)="setActiveSubMenu('all-deals')">
-                  <span class="submenu-icon">📊</span>
-                  View All Deals
-                </button>
-                <button 
-                    class="submenu-item"
-                    [class.active]="activeSubMenu() === 'active-subscriptions'"
-                    (click)="setActiveSubMenu('active-subscriptions')">
-                    <span class="submenu-icon">💰</span>
-                    Active Subscriptions
-                </button>
-                <button 
-                  class="submenu-item"
-                  [class.active]="activeSubMenu() === 'create-deal'"
-                  (click)="setActiveSubMenu('create-deal')">
-                  <span class="submenu-icon">🎯</span>
-                  Create Deal
-                </button>
-              </div>
-            }
-          </div>
-
-          <!-- AI Insights -->
-          <div class="menu-section">
-            <div 
-              class="menu-header" 
-              (click)="toggleMenu('ai')"
-              [class.active]="activeMenu() === 'ai'">
-              <span class="menu-icon">🔍</span>
-              <span class="menu-title">AI Insights</span>
-              <span class="menu-arrow">
-                {{ isMenuOpen('ai') ? '▼' : '►' }}
-              </span>
-            </div>
-
-            @if (isMenuOpen('ai')) {
-              <div class="submenu">
-                <button 
-                  class="submenu-item"
-                  [class.active]="activeSubMenu() === 'ai-insights'"
-                  (click)="setActiveSubMenu('ai-insights')">
-                  <span class="submenu-icon">🔍</span>
-                  Generate Insights
-                </button>
-              </div>
-            }
-          </div>
-
-        </nav>
-      </aside>
-
-      <main class="main-content">
-        <header class="content-header">
-          <h1>{{ getPageTitle() }}</h1>
-          <p>{{ getPageDescription() }}</p>
           
-          @if (activeSubMenu() === 'contact-deals' && selectedContact()) {
-            <div class="header-actions">
+          @if (isMenuOpen('contacts')) {
+            <div class="submenu">
               <button 
-                (click)="refreshContactDeals()" 
-                class="refresh-header-btn"
-                [disabled]="refreshingDeals()">
-                {{ refreshingDeals() ? '🔄 Refreshing...' : '🔄 Refresh Deals' }}
+                class="submenu-item"
+                [class.active]="activeSubMenu() === 'show-contacts'"
+                (click)="setActiveSubMenu('show-contacts')">
+                <span class="submenu-icon">📋</span>
+                Show Contacts
+              </button>
+              <button 
+                class="submenu-item"
+                [class.active]="activeSubMenu() === 'add-contact'"
+                (click)="setActiveSubMenu('add-contact')">
+                <span class="submenu-icon">➕</span>
+                Add Contact
+              </button>
+              
+            </div>
+          }
+        </div>
+
+        <!-- Deals Menu -->
+        <div class="menu-section">
+          <div 
+            class="menu-header" 
+            (click)="toggleMenu('deals')"
+            [class.active]="activeMenu() === 'deals'">
+            <span class="menu-icon">💰</span>
+            <span class="menu-title">Deals</span>
+            <span class="menu-arrow">
+              {{ isMenuOpen('deals') ? '▼' : '►' }}
+            </span>
+          </div>
+          
+          @if (isMenuOpen('deals')) {
+            <div class="submenu">
+              <button 
+                class="submenu-item"
+                [class.active]="activeSubMenu() === 'all-deals'"
+                (click)="setActiveSubMenu('all-deals')">
+                <span class="submenu-icon">📊</span>
+                View All Deals
+              </button>
+              <button 
+                  class="submenu-item"
+                  [class.active]="activeSubMenu() === 'active-subscriptions'"
+                  (click)="setActiveSubMenu('active-subscriptions')">
+                  <span class="submenu-icon">💰</span>
+                  Active Subscriptions
+              </button>
+              <button 
+                class="submenu-item"
+                [class.active]="activeSubMenu() === 'create-deal'"
+                (click)="setActiveSubMenu('create-deal')">
+                <span class="submenu-icon">🎯</span>
+                Create Deal
               </button>
             </div>
           }
+        </div>
 
-          
-        </header>
+        <!-- AI Insights -->
+        <div class="menu-section">
+          <div 
+            class="menu-header" 
+            (click)="toggleMenu('ai')"
+            [class.active]="activeMenu() === 'ai'">
+            <span class="menu-icon">🔍</span>
+            <span class="menu-title">AI Insights</span>
+            <span class="menu-arrow">
+              {{ isMenuOpen('ai') ? '▼' : '►' }}
+            </span>
+          </div>
 
-        <div class="content-area">
-         
-          @if (activeSubMenu() === 'show-contacts') {
-            <div class="content-section">
-              <app-contact-list                
-                (contactSelected)="onContactSelected($any($event))"
-                [showSelection]="true">
-              </app-contact-list>
+          @if (isMenuOpen('ai')) {
+            <div class="submenu">
+              <button 
+                class="submenu-item"
+                [class.active]="activeSubMenu() === 'ai-insights'"
+                (click)="setActiveSubMenu('ai-insights')">
+                <span class="submenu-icon">🔍</span>
+                Generate Insights
+              </button>
             </div>
           }
+        </div>
 
-          @if (activeSubMenu() === 'add-contact') {
-            <div class="content-section">
-              <app-contact-form 
-                (contactCreated)="onContactCreated($event)">
-              </app-contact-form>
-            </div>
-          }
+      </nav>
+    </aside>
 
-          <!-- @if (activeSubMenu() === 'contact-deals') {
-            <div class="content-section">
-              @if (selectedContact()) {
-                <app-contact-deals 
-                  [contact]="selectedContact()!" 
-                  [refreshTrigger]="refreshTrigger()"
-                  (loadingStateChange)="onDealsLoadingStateChange($event)">
-                </app-contact-deals>
-              } @else {
-                <div class="no-contact-selected">
-                  <div class="empty-state">
-                    <div class="empty-icon">👥</div>
-                    <h3>No Contact Selected</h3>
-                    <p>Please select a contact from the "Show Contacts" page to view their deals.</p>
-                    <button 
-                      class="primary-btn" 
-                      (click)="setActiveSubMenu('show-contacts')">
-                      📋 Go to Show Contacts
-                    </button>
+    <main class="main-content">
+      <header class="content-header">
+        <h1>{{ getPageTitle() }}</h1>
+        <p>{{ getPageDescription() }}</p>
+        
+        @if (activeSubMenu() === 'contact-deals' && selectedContact()) {
+          <div class="header-actions">
+            <button 
+              (click)="refreshContactDeals()" 
+              class="refresh-header-btn"
+              [disabled]="refreshingDeals()">
+              {{ refreshingDeals() ? '🔄 Refreshing...' : '🔄 Refresh Deals' }}
+            </button>
+          </div>
+        }
+
+        
+      </header>
+
+      <div class="content-area">
+        
+        @if (activeSubMenu() === 'show-contacts') {
+          <div class="content-section">
+            <app-contact-list                
+              (contactSelected)="onContactSelected($any($event))"
+              [showSelection]="true">
+            </app-contact-list>
+          </div>
+        }
+
+        @if (activeSubMenu() === 'add-contact') {
+          <div class="content-section">
+            <app-contact-form 
+              (contactCreated)="onContactCreated($event)">
+            </app-contact-form>
+          </div>
+        }          
+
+        <!-- All Deals View -->
+        @if (activeSubMenu() === 'all-deals') {
+          <div class="content-section">
+            <app-all-deals></app-all-deals>
+          </div>
+        }
+
+        @if (activeSubMenu() === 'create-deal') {
+          <div class="content-section">
+            <app-create-deal 
+              [preSelectedContact]="selectedContact()"
+              (dealCreated)="onDealCreated($event)">
+            </app-create-deal>
+          </div>
+        }
+
+        @if (activeSubMenu() === 'ai-insights') {
+          <div class="content-section">
+            <app-ai-insights></app-ai-insights>
+          </div>
+        }
+
+        @if (activeSubMenu() === 'active-subscriptions') {
+          <div class="content-section">
+            <app-active-subscriptions></app-active-subscriptions>
+          </div>
+        }
+        
+
+        <!-- Default/Dashboard View -->
+        @if (!activeSubMenu()) {
+          <div class="dashboard-welcome">
+            <div class="welcome-card">
+              <div class="welcome-icon">🚀</div>
+              <h2>Welcome to Breezy Admin Dashboard</h2>
+              <p>Select an option from the sidebar menu to get started.</p>
+              <div class="quick-stats">
+                <div class="stat-card">
+                  <div class="stat-icon">👥</div>
+                  <div class="stat-info">
+                    <h3>Contacts</h3>
+                    <p>Manage customer data</p>
                   </div>
                 </div>
-              }
-            </div>
-          } -->
-
-          <!-- All Deals View -->
-          @if (activeSubMenu() === 'all-deals') {
-            <div class="content-section">
-              <app-all-deals></app-all-deals>
-            </div>
-          }
-
-          @if (activeSubMenu() === 'create-deal') {
-            <div class="content-section">
-              <app-create-deal 
-                [preSelectedContact]="selectedContact()"
-                (dealCreated)="onDealCreated($event)">
-              </app-create-deal>
-            </div>
-          }
-
-          @if (activeSubMenu() === 'ai-insights') {
-            <div class="content-section">
-              <app-ai-insights></app-ai-insights>
-            </div>
-          }
-
-          @if (activeSubMenu() === 'active-subscriptions') {
-            <div class="content-section">
-              <app-active-subscriptions></app-active-subscriptions>
-            </div>
-          }
-          
-
-          <!-- Default/Dashboard View -->
-          @if (!activeSubMenu()) {
-            <div class="dashboard-welcome">
-              <div class="welcome-card">
-                <div class="welcome-icon">🚀</div>
-                <h2>Welcome to Breezy Admin Dashboard</h2>
-                <p>Select an option from the sidebar menu to get started.</p>
-                <div class="quick-stats">
-                  <div class="stat-card">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-info">
-                      <h3>Contacts</h3>
-                      <p>Manage customer data</p>
-                    </div>
+                <div class="stat-card">
+                  <div class="stat-icon">💰</div>
+                  <div class="stat-info">
+                    <h3>Deals</h3>
+                    <p>Track subscriptions</p>
                   </div>
-                  <div class="stat-card">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-info">
-                      <h3>Deals</h3>
-                      <p>Track subscriptions</p>
-                    </div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-icon">🔍</div>
-                    <div class="stat-info">
-                      <h3>AI Insights</h3>
-                      <p>Get AI-powered insights</p>
-                    </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon">🔍</div>
+                  <div class="stat-info">
+                    <h3>AI Insights</h3>
+                    <p>Get AI-powered insights</p>
                   </div>
                 </div>
               </div>
             </div>
-          }
-        </div>
-      </main>
-    </div>
+          </div>
+        }
+      </div>
+    </main>
+  </div>
