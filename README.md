@@ -66,6 +66,7 @@ Application runs on [http://localhost:4200](http://localhost:4200/)
 ## How to test the integration flow
 
 Once both server and the front end are running, the solution can be tested with the instructions listed below
+A small view of the flow can seen here: ![Hubspot Video](hubspot.mp4)
 
 ### List all Contacts Test
 
