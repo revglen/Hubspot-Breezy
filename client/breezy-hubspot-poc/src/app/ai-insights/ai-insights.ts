@@ -71,6 +71,10 @@ export class AiInsights {
     return true;
   }
 
+  private ensureArray<T>(data: T[] | undefined | null): T[] {
+    return data || [];
+  }
+
   async generateInsights(): Promise<void> {
     if (!this.canGenerateInsights()) return;
 
@@ -85,12 +89,20 @@ export class AiInsights {
         if (!contact) {
           throw new Error('Contact not found');
         }
+        console.log(contact);
+        console.log(this.deals)
 
-        const contactDeals = this.deals().filter(deal => 
-          deal.associations?.contacts?.results?.some((c: any) => c.id === contact.id)
-        );
+        const contact_deals: HubSpotDeal[] | undefined = await this.dealService.getDealsForContact(contact.id || '').toPromise();
+        console.log(contact_deals);
+        const safeDeals = this.ensureArray(contact_deals);
+        console.log(safeDeals);
 
-        const analysis = await this.aiService.analyseCustomerWithDeals(contact, contactDeals).toPromise();
+        // const contactDeals = this.deals().filter(deal => 
+        //   deal.associations?.contacts?.results?.some((c: any) => c.id === contact.id)
+        // );
+        // console.log(contactDeals)
+
+        const analysis = await this.aiService.analyseCustomerWithDeals(contact, safeDeals).toPromise();
         if (analysis) {
           this.customerAnalysis.set(analysis);
         } else {
