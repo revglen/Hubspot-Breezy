@@ -5,13 +5,15 @@
 ### How to run your application locally
 
 1. **Clone the repository**
-Navigate to the GitHub clone the repo listed below and then navigate to the folder
+
+Navigate to the GitHub repo listed below and then open the folder - breezy-hubspot-poc
 ```
 git clone https://github.com/revglen/Hubspot-Breezy.git
 cd breezy-hubspot-poc
 ```
 
 2. **Backend Setup**
+
 The server.js has been modified to support Google AI API.
 The Google AI API will be wrapped by local APIs within the server.js which will be called from the front end.
 In order to run the application, an .env file will have to created with the HubSpot and Google AI API. 
