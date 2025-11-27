@@ -20,3 +20,4 @@ yarn-error.log*
 /.sass-cache
 /connect.lock
 /libpeerconnection.log
+.$hubspot.drawio.bkp
