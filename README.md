@@ -4,36 +4,9 @@
 
 ### How to run your application locally
 
-1. **Clone the repository**
+The below setup will show how the breezy-hubspot-poc can be executed from the locally while connecting to HubSpot and Google AI.
 
-Navigate to the GitHub repo listed below and then open the folder - breezy-hubspot-poc
-```
-git clone https://github.com/revglen/Hubspot-Breezy.git
-cd breezy-hubspot-poc
-```
-
-2. **Backend Setup**
-
-The server.js has been modified to support Google AI API.
-The Google AI API will be wrapped by local APIs within the server.js which will be called from the front end.
-In order to run the application, an .env file will have to created with the HubSpot and Google AI API. 
-Please have a look at the section below - Expected Environment Variables - for the setup
-```
-cd server
-npm install
-npm start
-```
-Server runs on http://localhost:3001
-
-3. **Frontend Setup**
-```
-cd frontend
-npm install
-ng serve
-```
-Application runs on http://localhost:4200
-
-### Dependencies or Prerequisites
+1. **Dependencies or Prerequisites**
 
 **Backend:**
 - Node.js 16+
@@ -54,6 +27,39 @@ HUBSPOT_ACCESS_TOKEN=your_hubspot_access_token
 GOOGLE_AI_API_KEY=your_google_gemini_api_key
 PORT=3001
 ```
+
+
+1. **Clone the repository**
+
+Navigate to the GitHub repo listed below and then open the folder - breezy-hubspot-poc
+```
+git clone https://github.com/revglen/Hubspot-Breezy.git
+cd breezy-hubspot-poc
+```
+
+2. **Backend Setup**
+
+The server.js has been modified to support Google AI API.
+The Google AI API will be wrapped by local APIs within the server.js which will be called from the front end.
+In order to run the application, an .env file will have to created with the HubSpot and Google AI API Keys. 
+Please have a look at the section below - Expected Environment Variables - for the setup
+```
+cd server
+npm install
+npm start
+```
+Server runs on http://localhost:3001
+
+3. **Frontend Setup**
+```
+cd frontend
+npm install
+ng serve
+```
+Application runs on http://localhost:4200
+
+
+
 
 ### How to test the integration flow
 
